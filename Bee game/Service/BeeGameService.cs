@@ -33,7 +33,7 @@ namespace Bee_game.Service
             GameInstance game = GameInstance.getInstance(controller.GetBrowserId());
             if (savingtype == "file")
             {
-                StreamWriter strwtr = new System.IO.StreamWriter(Path.GetTempPath() + "MyTest.txt");
+                StreamWriter strwtr = new StreamWriter(Path.GetTempPath() + "MyTest.txt");
                 game.Stage.ForEach(strwtr.WriteLine);
                 strwtr.Close();
             }

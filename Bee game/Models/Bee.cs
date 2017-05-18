@@ -24,13 +24,13 @@ namespace Bee_game.Models
             get;
             set;
         }
-        [Column("lifespan")]
+        [Column("life_span")]
         public int Lifespan
         {
             get;
             set;
         }
-        [Column("hitpoints")]
+        [Column("hit_points")]
         public int Hitpoints
         {
             get;
