@@ -1,0 +1,226 @@
+﻿<script src="~/Scripts/BeeGameScript.js"></script>
+@{
+    ViewBag.Title = "Home Page";
+}
+<button class="btn btn-primary" onclick="EditConfiguration()">
+    Game settings
+</button>
+
+<button class="btn btn-primary" onclick="NewGame()">
+    Start Game
+</button>
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#LoadGameWindow">
+    Load Game
+</button>
+
+<!--Window to set game configuration -->
+<div class="modal fade" id="GameSettingsWindow" tabindex="-1" role="dialog" aria-labelledby="gameSettingsWindow" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="row text-center" id="Header">
+                    Settings
+                </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#Bees_number" data-toggle="tab">Bees number</a></li>
+                            <li><a href="#Bees_config" data-toggle="tab">Bees config</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="Bees_number">
+                                <form role="form" class="form-horizontal">
+
+                                    <div class="form-group">
+                                        <label for="queens_number" class="col-sm-2 control-label">
+                                            Queens number:
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control" id="queens_number" placeholder="Queens number" required />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="validationmessage" id="queens_number_validation_message">
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="workers_number" class="col-sm-2 control-label">
+                                            Workers number:
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control" id="workers_number" placeholder="Workers number" required />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="validationmessage" id="workers_number_validation_message">
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="drones_number" class="col-sm-2 control-label">
+                                            Drones number:
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control" id="drones_number" placeholder="Drones number" required />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="validationmessage" id="drones_number_validation_message">
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                            <div class="tab-pane" id="Bees_config">
+                                <form role="form" class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="queens_lifespan" class="col-sm-2 control-label">
+                                            Queens lifespan:
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control" id="queens_lifespan" placeholder="Queens lifespan" required />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="validationmessage" id="queens_lifespan_validation_message">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="queens_hitpoints" class="col-sm-2 control-label">
+                                            Queens Hit Points:
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control" id="queens_hitpoints" placeholder="Queens Hit Points" required />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="validationmessage" id="queens_hitpoints_validation_message">
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="workers_lifespan" class="col-sm-2 control-label">
+                                            Workers lifespan:
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control" id="workers_lifespan" placeholder="Workers lifespan" required />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="validationmessage" id="workers_lifespan_validation_message">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="workers_hitpoints" class="col-sm-2 control-label">
+                                            Workers Hit Points:
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control" id="workers_hitpoints" placeholder="Workers Hit Points" required />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="validationmessage" id="workers_hitpoints_validation_message">
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="drones_lifespan" class="col-sm-2 control-label">
+                                            Drones lifespan:
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control" id="drones_lifespan" placeholder="Drones lifespan" required />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="validationmessage" id="drones_lifespan_validation_message">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="drones_hitpoints" class="col-sm-2 control-label">
+                                            Drones Hit Points:
+                                        </label>
+                                        <div class="col-sm-7">
+                                            <input type="number" class="form-control" id="drones_hitpoints" placeholder="Drones Hit Points" required />
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label class="validationmessage" id="drones_hitpoints_validation_message">
+                                            </label>
+                                        </div>
+                                   </div>
+                                    
+                                </form>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-2 col-lg-offset-2">
+                                    <button type="submit" id="SaveButton" class="btn btn-primary btn-sm" onclick="SaveSettings()">
+                                        Save
+                                    </button>
+                                </div>
+                                <div class="col-sm-2 col-lg-offset-1">
+                                    <button type="submit" id="SaveButton" class="btn btn-primary btn-sm" onclick="SaveSettings('save&start')">
+                                        Save&Start
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--Window to choose way of loading saved game-->
+<div class="modal fade" id="LoadGameWindow" tabindex="-1" role="dialog" aria-labelledby="loadGameWindow" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="row text-center" id="Header">
+                    Load
+                </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-2">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="LoadGame('file')">
+                            Load from file
+                        </button>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-2">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="LoadGame('repository')">
+                            Load from repository
+                        </button>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-2">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="LoadGame('memory')">
+                            Load from memory
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

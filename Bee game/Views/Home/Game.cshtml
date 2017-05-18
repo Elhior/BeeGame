@@ -1,0 +1,121 @@
+﻿<script src="~/Scripts/BeeGameScript.js"></script>
+@model List<Bee_game.Models.IBee>
+@{
+    ViewBag.Title = "Game";
+}
+<button class="btn btn-primary" data-toggle="modal" data-target="#SaveGameWindow">
+    Save Game
+</button>
+<button class="btn btn-primary" onclick="ConfirmRestart()">
+    Restart
+</button>
+<button class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Home")'">
+    Home Page
+</button>
+
+<!--bees container-->
+<div class="col-md-12">
+    @foreach (var bee in @Model)
+    {
+        <div id=@Model.IndexOf(bee)bee style="float:left" onclick="SelectBee(this.id,@Model.Count)" isselected="no">
+            @if (@bee.Lifespan > 0)
+            {
+                @bee.Lifespan;
+            }
+            else
+            {
+                <p>Dead</p>
+            }
+        </div>
+
+        <p>
+            @if (bee.Name == "Queen")
+            {
+                <img src="http://onfermer.ru/wp-content/uploads/2016/04/1-736.jpg" alt="Queen" style="width:30px;height:30px;">
+            }
+            @if (bee.Name == "Worker")
+            {
+                <img src="http://proekt7d.ru/wp-content/uploads/2014/12/pchela-tantsuet.jpg" alt="Worker" style="width:30px;height:30px;">
+            }
+            @if (bee.Name == "Drone")
+            {
+                <img src="http://thedifference.ru/wp-content/uploads/2012/09/otlichiya-pchely-ot-osy.jpg" alt="Drone" style="width:30px;height:30px;">
+            }
+        </p>
+    }
+</div>
+
+<button class="btn btn-primary" onclick="HitBee(@Model.Count)">
+    Hit Bee
+</button>
+<!--window after stage is completed to restart or go to home page-->
+<div class="modal fade" id="VictoryWindow" tabindex="-1" role="dialog" aria-labelledby="victoryWindow" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="row text-center" id="Header">
+                    Victory
+                </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-2 col-sm-offset-4">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="NewGame()">
+                            New Game
+                        </button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("Index", "Home")'">
+                            Home Page
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--window to save game with three options-->
+<div class="modal fade" id="SaveGameWindow" tabindex="-1" role="dialog" aria-labelledby="saveGameWindow" aria-hidden="true">
+
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="row text-center" id="Header">
+                    Save
+                </h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-offset-1 col-sm-2">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="SaveGame('file')">
+                            Save in file
+                        </button>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-2">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="SaveGame('repository')">
+                            Save in repository
+                        </button>
+                    </div>
+                    <div class="col-sm-offset-2 col-sm-2">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="SaveGame('memory')">
+                            Save in memory
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
