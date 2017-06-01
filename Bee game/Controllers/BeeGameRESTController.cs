@@ -7,41 +7,47 @@ namespace Bee_game.Controllers
 {
     public class BeeGameRESTController : Controller
     {
+        IService beeGameService;
+
+        public BeeGameRESTController()
+        {
+            beeGameService = new BeeGameService();
+        }
 
         [HttpGet]
         public void NewGame()
         {
-            BeeGameService.Service().NewGame(GetBrowserId());
+            beeGameService.NewGame(GetBrowserId());
         }
 
         [HttpGet]
         public void SaveGame(string savingtype)
         {
-            BeeGameService.Service().SaveGame(GetBrowserId(), savingtype);
+            beeGameService.SaveGame(GetBrowserId(), savingtype);
         }
 
         [HttpGet]
         public string LoadGame(string loadingtype)
         {
-            return BeeGameService.Service().LoadGame(GetBrowserId(), loadingtype);
+            return beeGameService.LoadGame(GetBrowserId(), loadingtype);
         }
 
         [HttpGet]
         public string GetConfiguration()
         {
-            return BeeGameService.Service().GetConfiguration(GetBrowserId());
+            return beeGameService.GetConfiguration(GetBrowserId());
         }
 
         [HttpPost]
         public void SaveConfiguration(GameConfiguration gameConfiguration)
         {
-            BeeGameService.Service().SaveConfiguration(GetBrowserId(), gameConfiguration);
+            beeGameService.SaveConfiguration(GetBrowserId(), gameConfiguration);
         }
 
         [HttpGet]
         public string HitBee(string id)
         {
-            return BeeGameService.Service().HitBee(GetBrowserId(), id);
+            return beeGameService.HitBee(GetBrowserId(), id);
         }
 
         //get unique id of browser to run new games from different browsers simultaneously
