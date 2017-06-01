@@ -5,21 +5,18 @@ using Bee_game.Models;
 using Newtonsoft.Json;
 using System.IO;
 using System.Text;
-using Bee_game.Controllers;
+using Bee_game.DAL;
 
 namespace Bee_game.Service
 {
     public class BeeGameService : IService
     {
-        private static BeeGameService service;
+        IRepository<GameInstance> dbContext;
 
-        private BeeGameService(){ }
-
-        public static BeeGameService Service()
+        public BeeGameService()
         {
-            if (service == null)
-                service = new BeeGameService();
-            return service;
+            //dbContext = new SQLBeeRepository();
+            dbContext = new MongoBeeRepository();
         }
 
         public void NewGame(int gameID)
@@ -40,8 +37,6 @@ namespace Bee_game.Service
 
             if (savingtype == "repository")
             {
-                //Bee_game.DAL.IRepository<GameInstance> dbContext = new Bee_game.DAL.SQLBeeRepository();
-                Bee_game.DAL.IRepository<GameInstance> dbContext = new Bee_game.DAL.MongoBeeRepository();
                 dbContext.Save(game);
             }
 
@@ -87,8 +82,6 @@ namespace Bee_game.Service
 
             if (loadingtype == "repository")
             {
-                //Bee_game.DAL.IRepository<GameInstance> dbContext = new Bee_game.DAL.SQLBeeRepository();
-                Bee_game.DAL.IRepository<GameInstance> dbContext = new Bee_game.DAL.MongoBeeRepository();
                 if (dbContext.Load(game))
                     return "Loaded.";
                 else
