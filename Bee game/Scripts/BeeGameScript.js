@@ -1,7 +1,7 @@
 ﻿function NewGame() {
     $.ajax({
         type: "GET",
-        url: "/Home/NewGame",
+        url: "/BeeGameREST/NewGame",
         success: function (response) {
             window.location.href = "/Home/Game";
         }
@@ -13,7 +13,7 @@ function EditConfiguration() {
     autoFocus('#GameSettingsWindow', '#queens_number');
     $.ajax({
         type: "GET",
-        url: "/Home/GetConfiguration",
+        url: "/BeeGameREST/GetConfiguration",
         dataType: "json",
 
         success: function (response) {
@@ -46,7 +46,7 @@ function SaveSettings(savingtype) {
     $.ajax({
         type: "POST",
         data: gameConfiguration,
-        url: "/Home/SaveConfiguration",
+        url: "/BeeGameREST/SaveConfiguration",
 
         success: function (response) {
             $('#GameSettingsWindow').modal('toggle');
@@ -69,7 +69,7 @@ function HitBee(beesNumber) {
 
     $.ajax({
         type: "GET",
-        url: "/Home/HitBee?id=" + id,
+        url: "/BeeGameREST/HitBee?id=" + id,
         success: function (response) {
             if (response == "Victory") {
                 for (var i = 0; i < beesNumber; i++) {
@@ -107,7 +107,7 @@ function SelectBee(id, beesNumber) {
 function SaveGame(savingtype){
     $.ajax({
         type: "GET",
-        url: "/Home/SaveGame?savingtype=" + savingtype,
+        url: "/BeeGameREST/SaveGame?savingtype=" + savingtype,
         success: function (response) {
             $('#SaveGameWindow').modal('toggle');
             alert("Saved.");
@@ -118,7 +118,7 @@ function SaveGame(savingtype){
 function LoadGame(loadingtype) {
     $.ajax({
         type: "GET",
-        url: "/Home/LoadGame?loadingtype=" + loadingtype,
+        url: "/BeeGameREST/LoadGame?loadingtype=" + loadingtype,
         success: function (response) {
             if (response != "Save is not found.")
                 window.location.href = "/Home/Game";
