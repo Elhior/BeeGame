@@ -9,7 +9,7 @@ using Bee_game.Controllers;
 
 namespace Bee_game.Service
 {
-    public class BeeGameService
+    public class BeeGameService : IService
     {
         private static BeeGameService service;
 
@@ -22,15 +22,15 @@ namespace Bee_game.Service
             return service;
         }
 
-        public void NewGame(HomeController controller)
+        public void NewGame(int gameID)
         {
-            GameInstance.getInstance(controller.GetBrowserId()).Stage.Clear();
+            GameInstance.getInstance(gameID).Stage.Clear();
         }
 
-        public void SaveGame(HomeController controller, string savingtype)
+        public void SaveGame(int gameID, string savingtype)
         {
             //ref of game to avoid multiple getInstance method calls
-            GameInstance game = GameInstance.getInstance(controller.GetBrowserId());
+            GameInstance game = GameInstance.getInstance(gameID);
             if (savingtype == "file")
             {
                 StreamWriter strwtr = new StreamWriter(Path.GetTempPath() + "MyTest.txt");
@@ -40,10 +40,9 @@ namespace Bee_game.Service
 
             if (savingtype == "repository")
             {
-                Bee_game.DAL.BeeContext db = new Bee_game.DAL.BeeContext();
-                db.Database.ExecuteSqlCommand("TRUNCATE TABLE [Bees]");
-                game.Stage.ForEach(bee => db.Bee.Add((Bee)bee));
-                db.SaveChanges();
+                //Bee_game.DAL.IRepository<GameInstance> dbContext = new Bee_game.DAL.SQLBeeRepository();
+                Bee_game.DAL.IRepository<GameInstance> dbContext = new Bee_game.DAL.MongoBeeRepository();
+                dbContext.Save(game);
             }
 
             if (savingtype == "memory")
@@ -55,10 +54,10 @@ namespace Bee_game.Service
             }
         }
 
-        public string LoadGame(HomeController controller, string loadingtype)
+        public string LoadGame(int gameID, string loadingtype)
         {
             //ref of game to avoid multiple getInstance method calls
-            GameInstance game = GameInstance.getInstance(controller.GetBrowserId());
+            GameInstance game = GameInstance.getInstance(gameID);
             //clearing stage, if game is loaded when previos stage isn`t ended
             game.Stage.Clear();
 
@@ -88,12 +87,12 @@ namespace Bee_game.Service
 
             if (loadingtype == "repository")
             {
-                Bee_game.DAL.BeeContext db = new Bee_game.DAL.BeeContext();
-                if (db.Bee.ToList().Count == 0)
+                //Bee_game.DAL.IRepository<GameInstance> dbContext = new Bee_game.DAL.SQLBeeRepository();
+                Bee_game.DAL.IRepository<GameInstance> dbContext = new Bee_game.DAL.MongoBeeRepository();
+                if (dbContext.Load(game))
+                    return "Loaded.";
+                else
                     return "Save is not found.";
-                //make game stage from repository_save data
-                db.Bee.ToList().ForEach(bee => game.Stage.Add(bee));
-                return "Loaded.";
             }
 
             if (loadingtype == "memory")
@@ -123,21 +122,21 @@ namespace Bee_game.Service
         }
 
         //save new game configuration specified in view
-        public void SaveConfiguration(HomeController controller, GameConfiguration gameConfiguration)
+        public void SaveConfiguration(int gameID, GameConfiguration gameConfiguration)
         {
-            GameInstance.SetConfiguration(controller.GetBrowserId(),gameConfiguration);
+            GameInstance.SetConfiguration(gameID, gameConfiguration);
         }
 
         //put current game configuration as default values in views edit_settings window
-        public string GetConfiguration(HomeController controller)
+        public string GetConfiguration(int gameID)
         {
-            return JsonConvert.SerializeObject(GameInstance.getInstance(controller.GetBrowserId()).gameConfig);
+            return JsonConvert.SerializeObject(GameInstance.getInstance(gameID).gameConfig);
         }
 
-        public string HitBee(HomeController controller, string id)
+        public string HitBee(int gameID, string id)
         {
             //ref of game to avoid multiple getInstance method calls
-            GameInstance game = GameInstance.getInstance(controller.GetBrowserId());
+            GameInstance game = GameInstance.getInstance(gameID);
             //number of bee to hit
             int beeNumber;
             //choice random not dead bee
