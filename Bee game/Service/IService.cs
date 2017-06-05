@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Bee_game.Models;
 
 namespace Bee_game.Service
 {
-    interface IService
+    public interface IService
     {
         //initialise new game
         void NewGame(int gameID);
