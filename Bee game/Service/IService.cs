@@ -14,8 +14,8 @@ namespace Bee_game.Service
         string LoadGame(int gameID ,string loadingType);
         //save new game configuration
         void SaveConfiguration(int gameID, GameConfiguration gameConfiguration);
-        //return game configuration ????????return type config
-        string GetConfiguration(int gameID);
+        //return game configuration
+        GameConfiguration GetConfiguration(int gameID);
         //hit target(chosen or random)
         string HitBee(int gameID, string target);
     }

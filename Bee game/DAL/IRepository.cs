@@ -7,8 +7,8 @@ namespace Bee_game.DAL
                 where T : class
     {
         //saving game
-        bool Save(T game);
+        bool Save(T stage);
         //loading game
-        bool Load(T game);
+        bool Load(T stage);
     }
 }
