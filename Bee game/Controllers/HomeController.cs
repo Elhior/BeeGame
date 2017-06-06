@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
 using Bee_game.Models;
-using Bee_game.Service;
 
 namespace Bee_game.Controllers
 {
@@ -9,12 +8,14 @@ namespace Bee_game.Controllers
     {
         public ActionResult Index()
         {
-            Logger.InitLogger();
-            return View();
+            ViewBag.Title = "Home Page";
+            Logger.Log.Debug("Home page requested.");
+            return View("Index");
         }
-
+        
         public ActionResult Game()
         {
+            Logger.Log.Debug("Game page requested.");
             return View(GameInstance.getInstance(GetBrowserId()).Stage);
         }
         
@@ -25,11 +26,12 @@ namespace Bee_game.Controllers
             {
                 if (Request.Cookies["BeeGameSettings"]["ID"] == null){}
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.Log.Warn("Browser haven't id (Probably first game)."+ ex.ToString());
                 Response.Cookies["BeeGameSettings"]["ID"] = GameInstance.GetNewGameId().ToString();
             }
- 
+            Logger.Log.Debug("Browser id requested.");
             return Int32.Parse(Request.Cookies["BeeGameSettings"]["ID"]);
         }
     }
