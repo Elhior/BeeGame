@@ -1,7 +1,5 @@
 ﻿<script src="~/Scripts/BeeGameScript.js"></script>
-@{
-    ViewBag.Title = "Home Page";
-}
+
 <button class="btn btn-primary" onclick="EditConfiguration()">
     Game settings
 </button>
@@ -204,17 +202,17 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-offset-1 col-sm-2">
-                        <button type="submit" class="btn btn-primary btn-sm" onclick="LoadGame('file')">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="LoadGame('File')">
                             Load from file
                         </button>
                     </div>
                     <div class="col-sm-offset-2 col-sm-2">
-                        <button type="submit" class="btn btn-primary btn-sm" onclick="LoadGame('repository')">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="LoadGame('Repository')">
                             Load from repository
                         </button>
                     </div>
                     <div class="col-sm-offset-2 col-sm-2">
-                        <button type="submit" class="btn btn-primary btn-sm" onclick="LoadGame('memory')">
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="LoadGame('Memory')">
                             Load from memory
                         </button>
                     </div>
