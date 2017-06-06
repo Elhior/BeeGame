@@ -14,6 +14,6 @@ namespace Bee_game.DAL
         {
         }
 
-        public DbSet<Bee> Bee { get; set; }
+        public DbSet<IBee> Bee { get; set; }
     }
 }
