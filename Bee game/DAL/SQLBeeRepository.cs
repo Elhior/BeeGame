@@ -5,7 +5,7 @@ using Bee_game.Models;
 
 namespace Bee_game.DAL
 {
-    public class SQLBeeRepository : IRepository<GameInstance>
+    public class SQLBeeRepository : IRepository<List<IBee>>
     {
         private BeeContext db;
 
@@ -14,27 +14,35 @@ namespace Bee_game.DAL
             db = new BeeContext();
         }
         //saving game
-        public bool Save(GameInstance game)
+        public bool Save(List<IBee> stage)
         {
             try
             {
-                // cleaning save before writing current state of game
-                db.Database.ExecuteSqlCommand("TRUNCATE TABLE [Bees]");
-                // writing current state of game into save
-                game.Stage.ForEach(bee => db.Bee.Add((Bee)bee));
-                db.SaveChanges();
+                try
+                {
+                    // cleaning save before writing current state of game
+                    db.Database.ExecuteSqlCommand("TRUNCATE TABLE [Bees]");
+                }
+                catch (Exception ex)
+                {
+                    Logger.Log.Warn("TRUNCATE TABLE failed:" + ex.ToString());
+                }
 
+                // writing current state of game into save
+                stage.ForEach(bee => db.Bee.Add(bee));
+                db.SaveChanges();
+                           
                 Logger.Log.Info("Game Saved");
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                Logger.Log.Error("Game saving failed.");
+                Logger.Log.Error("Game saving failed:"+ ex.ToString());
                 return false;
             }
         }
         //loading game
-        public bool Load(GameInstance game)
+        public bool Load(List<IBee> stage)
         {
             if (db.Bee.ToList().Count == 0)
             {
@@ -42,7 +50,7 @@ namespace Bee_game.DAL
                 return false;
             }
             //make game stage from repository_save data
-            db.Bee.ToList().ForEach(bee => game.Stage.Add(bee));
+            db.Bee.ToList().ForEach(bee => stage.Add(bee));
             Logger.Log.Info("Game Loaded");
             return true;
         }
