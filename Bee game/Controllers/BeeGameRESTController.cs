@@ -2,16 +2,17 @@
 using System.Web.Mvc;
 using Bee_game.Models;
 using Bee_game.Service;
+using Newtonsoft.Json;
 
 namespace Bee_game.Controllers
 {
     public class BeeGameRESTController : Controller
     {
-        IService beeGameService;
+       private IService beeGameService;
 
-        public BeeGameRESTController()
+        public BeeGameRESTController(IService gameService)
         {
-            beeGameService = new BeeGameService();
+            beeGameService = gameService;
         }
 
         [HttpGet]
@@ -35,7 +36,7 @@ namespace Bee_game.Controllers
         [HttpGet]
         public string GetConfiguration()
         {
-            return beeGameService.GetConfiguration(GetBrowserId());
+            return JsonConvert.SerializeObject(beeGameService.GetConfiguration(GetBrowserId()));
         }
 
         [HttpPost]
@@ -61,7 +62,7 @@ namespace Bee_game.Controllers
             {
                 Response.Cookies["BeeGameSettings"]["ID"] = GameInstance.GetNewGameId().ToString();
             }
-
+            Logger.Log.Debug("Browser id requested.");
             return Int32.Parse(Request.Cookies["BeeGameSettings"]["ID"]);
         }
     }
