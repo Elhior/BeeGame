@@ -8,7 +8,7 @@ namespace Bee_game
     {
         public void Configuration(IAppBuilder app)
         {
-            //ConfigureAuth(app);
+            Logger.InitLogger();
         }
     }
 }
