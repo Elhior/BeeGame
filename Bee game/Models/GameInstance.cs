@@ -35,6 +35,7 @@ namespace Bee_game.Models
             }
             return games.First(n => n.gameId == browserId);
         }
+
         //get unique id for browser
         public static int GetNewGameId()
         {
@@ -80,15 +81,15 @@ namespace Bee_game.Models
         {
             for (int i = 0; i < gameConfig.QueensNumber; i++)
             {
-                Stage.Add(new Bee("Queen",gameConfig.QueensLifespan, gameConfig.QueensHitpoints));
+                Stage.Add(BeesFactory.CreateBee("Queen", gameConfig.QueensLifespan, gameConfig.QueensHitpoints));
             }
             for (int i = 0; i < gameConfig.WorkersNumber; i++)
             {
-                Stage.Add(new Bee("Worker",gameConfig.WorkersLifespan, gameConfig.WorkersHitpoints));
+                Stage.Add(BeesFactory.CreateBee("Worker", gameConfig.WorkersLifespan, gameConfig.WorkersHitpoints));
             }
             for (int i = 0; i < gameConfig.DronesNumber; i++)
             {
-                Stage.Add(new Bee("Drone",gameConfig.DronesLifespan, gameConfig.DronesHitpoints));
+                Stage.Add(BeesFactory.CreateBee("Drone", gameConfig.DronesLifespan, gameConfig.DronesHitpoints));
             }
         }
     }
